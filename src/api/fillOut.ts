@@ -48,12 +48,23 @@ router.get("/:id/filteredResponses", async (req: Request<{id: string}, {}, {}, R
     const filters: FilterClauseType[] = JSON.parse(req.query.filters);
     const limit = req.query.limit ? req.query.limit : 99; // default to 99 per page
     const filteredResponses: FillOutResponse[] = [];
+    const allResponses = response.data.responses
 
-    for (const item of response.data.responses) {
+    // No filters to apply
+    if (!filters || filters.length === 0) {
+        const totalResponses = response.data.responses;
+        const pageCount = Math.ceil(totalResponses / limit);
 
-        // console.log('questions', item.questions);
+        res.status(200).json({
+            responses: allResponses,
+            totalResponses,
+            pageCount
+        })
+    }
 
-        // Apply filters
+    // Apply filters
+    for (const item of allResponses) {
+
         let filteredQuestions = [];
         for (const f of filters) {
             const id = f.id;
