@@ -60,6 +60,7 @@ router.get("/:id/filteredResponses", async (req: Request<{id: string}, {}, {}, R
             totalResponses,
             pageCount
         })
+        return;
     }
 
     // Apply filters
