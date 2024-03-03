@@ -42,9 +42,9 @@ router.get("/filteredResponses", async (req: Request<{}, {}, {}, RequestQuery>, 
 
     // TODO: create axios instance in another file to make more modular
     const config: AxiosRequestConfig = {
-        headers: { Authorization: `Bearer sk_prod_TfMbARhdgues5AuIosvvdAC9WsA5kXiZlW8HZPaRDlIbCpSpLsXBeZO7dCVZQwHAY3P4VSBPiiC33poZ1tdUj2ljOzdTCCOSpUZ_3912`}
+        headers: { Authorization: `Bearer ${process.env.FILLOUT_DEMO_TOKEN}`}
     }
-    const response = await axios.get(`https://api.fillout.com/v1/api/forms/cLZojxk94ous/submissions`, config);
+    const response = await axios.get(`${process.env.FILLOUT_BASE_URL}/cLZojxk94ous/submissions`, config);
     const filters: FilterClauseType[] = JSON.parse(req.query.filters);
     const limit = req.query.limit ? req.query.limit : 99; // default to 99 per page
     const filteredResponses: FillOutResponse[] = [];
