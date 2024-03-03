@@ -38,13 +38,13 @@ type FilterClauseType = {
 
 
 // TODO: Setup error handling
-router.get("/filteredResponses", async (req: Request<{}, {}, {}, RequestQuery>, res: Response<FilteredResponse>) => {
+router.get("/:id/filteredResponses", async (req: Request<{id: string}, {}, {}, RequestQuery>, res: Response<FilteredResponse>) => {
 
     // TODO: create axios instance in another file to make more modular
     const config: AxiosRequestConfig = {
         headers: { Authorization: `Bearer ${process.env.FILLOUT_DEMO_TOKEN}`}
     }
-    const response = await axios.get(`${process.env.FILLOUT_BASE_URL}/cLZojxk94ous/submissions`, config);
+    const response = await axios.get(`${process.env.FILLOUT_BASE_URL}/${req.params.id}/submissions`, config);
     const filters: FilterClauseType[] = JSON.parse(req.query.filters);
     const limit = req.query.limit ? req.query.limit : 99; // default to 99 per page
     const filteredResponses: FillOutResponse[] = [];
