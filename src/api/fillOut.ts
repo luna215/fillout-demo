@@ -45,7 +45,7 @@ router.get("/:id/filteredResponses", async (req: Request<{id: string}, {}, {}, R
         headers: { Authorization: `Bearer ${process.env.FILLOUT_DEMO_TOKEN}`}
     }
     const response = await axios.get(`${process.env.FILLOUT_BASE_URL}/${req.params.id}/submissions`, config);
-    const filters: FilterClauseType[] = JSON.parse(req.query.filters);
+    const filters: FilterClauseType[] = JSON.parse(req.query.filters || "[]");
     const limit = req.query.limit ? req.query.limit : 99; // default to 99 per page
     const filteredResponses: FillOutResponse[] = [];
     const allResponses = response.data.responses
